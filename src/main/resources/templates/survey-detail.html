@@ -1,103 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Detalles de la encuesta</title>
-	<style>
-		/* General */
-		body {
-		    font-family: Arial, sans-serif;
-		    line-height: 1.6;
-		    margin: 0;
-		    padding: 0;
-		    background-color: #f4f4f9;
-		    color: #333;
-		}
+<title>Detalles de la encuesta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-		/* Contenedor principal */
-		form {
-		    max-width: 600px;
-		    margin: 30px auto;
-		    padding: 20px;
-		    background-color: #fff;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		}
 
-		/* Título principal */
-		h1 {
-		    text-align: center;
-		    color: #2c3e50;
-		    margin-bottom: 20px;
-		}
-
-		/* Preguntas */
-		ul {
-		    list-style: none;
-		    padding: 0;
-		}
-
-		li {
-		    margin-bottom: 15px;
-		}
-
-		/* Opciones */
-		input[type="radio"] {
-		    margin-right: 10px;
-		}
-
-		label {
-		    font-size: 1rem;
-		    color: #555;
-		}
-
-		/* Botón */
-		button {
-		    display: block;
-		    width: 100%;
-		    padding: 10px;
-		    font-size: 1.1rem;
-		    color: #fff;
-		    background-color: #2ecc71;
-		    border: none;
-		    border-radius: 5px;
-		    cursor: pointer;
-		    transition: background-color 0.3s ease;
-		}
-
-		button:hover {
-		    background-color: #27ae60;
-		}
-
-		/* Estilos responsivos */
-		@media (max-width: 768px) {
-		    form {
-		        padding: 15px;
-		    }
-
-		    button {
-		        font-size: 1rem;
-		        padding: 8px;
-		    }
-		}
-	</style>
 </head>
-<body>
-    <h1 th:text="${survey.title}"></h1>
-	<form th:action="@{/submitVote/{id}(id=${survey.id})}" method="post">
-        <ul>
-            <li th:each="question : ${survey.questions}">
-                <p th:text="${question.questionText}"></p>
-                <ul>
-                    <li th:each="option : ${question.options}">
-						<input type="radio" th:id="${option.id}" th:name="voteId" th:value="${option.id}" />
-                        <label th:for="${option.id}" th:text="${option.optionText}"></label>
+<body class="bg-light">
+	<div class="container mt-5">
+        <h1 class="text-center text-primary mb-4" th:text="${survey.title}"></h1>
+
+        <div class="card shadow p-4">
+            <form th:action="@{/submitVote/{id}(id=${survey.id})}" method="post">
+                <ul class="list-group">
+                    <li th:each="question : ${survey.questions}" class="list-group-item">
+                        <p class="fw-bold mb-2" th:text="${question.questionText}"></p>
+                        <ul class="list-unstyled">
+                            <li th:each="option : ${question.options}" class="form-check">
+                                <input class="form-check-input" type="radio"
+                                    th:id="${option.id}" th:name="voteId" th:value="${option.id}" />
+                                <label class="form-check-label ms-2" th:for="${option.id}" th:text="${option.optionText}"></label>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-            </li>
-        </ul>
-        <button type="submit">Vote</button>
-    </form>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Votar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	
+
 </body>
 </html>
